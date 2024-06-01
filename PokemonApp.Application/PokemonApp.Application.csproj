@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pokemon.Domain\PokemonApp.Domain.csproj" />
-    <ProjectReference Include="..\Pokemon.Infrastructure\PokemonApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\PokemonApp.Domain\PokemonApp.Domain.csproj" />
+    <ProjectReference Include="..\PokemonApp.Infrastructure\PokemonApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

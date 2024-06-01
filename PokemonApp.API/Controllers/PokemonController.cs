@@ -16,18 +16,24 @@ namespace PokemonApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pokemon>>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
+        public ActionResult<IEnumerable<Pokemon>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            var pagedPokemons = (await _pokemonService.GetPokemonsAsync()).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var pagedPokemons = _pokemonService.GetPokemons()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            
             return Ok(pagedPokemons);
         }
 
-        [HttpGet("{number}")]
-        public async Task<ActionResult<Pokemon>> Get(int number)
+        [HttpGet("{id}")]
+        public ActionResult<Pokemon> Get(int id)
         {
-            var pokemon = await _pokemonService.GetPokemonAsync(number);
+            var pokemon = _pokemonService.GetPokemon(id);
+            
             if (pokemon == null)
                 return NotFound();
+            
             return Ok(pokemon);
         }
     }

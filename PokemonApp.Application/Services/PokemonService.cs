@@ -12,14 +12,14 @@ namespace PokemonApp.API.Services
             _pokemonRepository = pokemonRepository;
         }
 
-        public async Task<Pokemon> GetPokemonAsync(int id)
+        public Pokemon GetPokemon(int id)
         {
-            return await _pokemonRepository.GetPokemonAsync(id);
+            return _pokemonRepository.GetPokemon(id);
         }
 
-        public async Task<IEnumerable<Pokemon>> GetPokemonsAsync()
+        public IEnumerable<Pokemon> GetPokemons()
         {
-            return await _pokemonRepository.GetPokemonsAsync();
+            return _pokemonRepository.GetPokemons();
         }
     }
 }

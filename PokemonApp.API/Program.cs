@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PokemonApp.API.Services;
-using PokemonApp.Infrastructure.Data;
 using PokemonApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +24,6 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "PokemonApi", Version = "v1" });
 });
-builder.Services.AddDbContext<PokemonAppDbContext>(c =>
-                c.UseInMemoryDatabase("PokemonDb"));
 
 var app = builder.Build();
 

@@ -4,8 +4,8 @@ namespace PokemonApp.API.Services
 {
     public interface IPokemonService
     {
-        Task<IEnumerable<Pokemon>> GetPokemonsAsync();
+        IEnumerable<Pokemon> GetPokemons();
 
-        Task<Pokemon> GetPokemonAsync(int id);
+        Pokemon GetPokemon(int id);
     }
 }
