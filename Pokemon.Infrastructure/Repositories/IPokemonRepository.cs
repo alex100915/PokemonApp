@@ -1,8 +1,8 @@
 ﻿using PokemonApp.Domain.Entities;
 
-namespace PokemonApp.API.Services
+namespace PokemonApp.Infrastructure.Repositories
 {
-    public interface IPokemonService
+    public interface IPokemonRepository
     {
         Task<IEnumerable<Pokemon>> GetPokemonsAsync();
 

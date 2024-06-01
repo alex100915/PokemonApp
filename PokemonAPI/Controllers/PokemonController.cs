@@ -1,33 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using PokemonAPI.Models;
+using PokemonApp.API.Services;
+using PokemonApp.Domain.Entities;
 
-namespace PokemonApi.Controllers
+namespace PokemonApp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class PokemonController : ControllerBase
     {
-        private static readonly List<Pokemon> Pokemons;
-
-        static PokemonController()
+        private readonly IPokemonService _pokemonService;
+        
+        public PokemonController(IPokemonService pokemonService)
         {
-            using var reader = new StreamReader("pokemon.json");
-            var json = reader.ReadToEnd();
-            Pokemons = JsonConvert.DeserializeObject<List<Pokemon>>(json);
+            _pokemonService = pokemonService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Pokemon>> GetPokemons([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
+        public async Task<ActionResult<IEnumerable<Pokemon>>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            var pagedPokemons = Pokemons.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var pagedPokemons = (await _pokemonService.GetPokemonsAsync()).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(pagedPokemons);
         }
 
         [HttpGet("{number}")]
-        public ActionResult<Pokemon> GetPokemon(int number)
+        public async Task<ActionResult<Pokemon>> Get(int number)
         {
-            var pokemon = Pokemons.FirstOrDefault(p => p.Number == number);
+            var pokemon = await _pokemonService.GetPokemonAsync(number);
             if (pokemon == null)
                 return NotFound();
             return Ok(pokemon);

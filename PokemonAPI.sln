@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.API", "PokemonAPI\Pokemon.API.csproj", "{1A40BFB9-8BE1-4E4F-8049-6A71F290615C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonApp.API", "PokemonAPI\PokemonApp.API.csproj", "{1A40BFB9-8BE1-4E4F-8049-6A71F290615C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Application", "Application\Pokemon.Application.csproj", "{ADACC2FA-5791-4F23-A37C-791598397D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonApp.Application", "Application\PokemonApp.Application.csproj", "{ADACC2FA-5791-4F23-A37C-791598397D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Domain", "Pokemon.Domain\Pokemon.Domain.csproj", "{8B60928C-9930-4B32-A0FA-0B27B1B15740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonApp.Domain", "Pokemon.Domain\PokemonApp.Domain.csproj", "{8B60928C-9930-4B32-A0FA-0B27B1B15740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon.Infrastructure", "Pokemon.Infrastructure\Pokemon.Infrastructure.csproj", "{4A5BC7B8-65B4-432A-90A3-76D0713249A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonApp.Infrastructure", "Pokemon.Infrastructure\PokemonApp.Infrastructure.csproj", "{4A5BC7B8-65B4-432A-90A3-76D0713249A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-﻿namespace Pokemon.Domain.Entities
+﻿namespace PokemonApp.Domain.Entities
 {
     public class Pokemon
     {
