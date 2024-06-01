@@ -11,4 +11,8 @@
     <ProjectReference Include="..\PokemonApp.Infrastructure\PokemonApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pokemons\" />
+  </ItemGroup>
+
 </Project>

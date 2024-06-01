@@ -8,6 +8,7 @@ builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IPokemonService, PokemonService>();
 
 builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",

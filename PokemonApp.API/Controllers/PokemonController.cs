@@ -6,7 +6,7 @@ namespace PokemonApp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PokemonController : ControllerBase
+    public class PokemonController : BaseController
     {
         private readonly IPokemonService _pokemonService;
         
@@ -18,23 +18,34 @@ namespace PokemonApp.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Pokemon>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            var pagedPokemons = _pokemonService.GetPokemons()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            
-            return Ok(pagedPokemons);
+            try
+            {
+                var pagedPokemons = _pokemonService.GetPokemons(page, pageSize);
+
+                return Ok(pagedPokemons);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<Pokemon> Get(int id)
         {
-            var pokemon = _pokemonService.GetPokemon(id);
-            
-            if (pokemon == null)
-                return NotFound();
-            
-            return Ok(pokemon);
+            try
+            {
+                var pokemon = _pokemonService.GetPokemon(id);
+
+                if (pokemon == null)
+                    return NotFound();
+
+                return Ok(pokemon);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
         }
     }
 }

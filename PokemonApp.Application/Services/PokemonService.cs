@@ -17,9 +17,9 @@ namespace PokemonApp.API.Services
             return _pokemonRepository.GetPokemon(id);
         }
 
-        public IEnumerable<Pokemon> GetPokemons()
+        public IEnumerable<Pokemon> GetPokemons(int page, int pageSize)
         {
-            return _pokemonRepository.GetPokemons();
+            return _pokemonRepository.GetPokemons(page, pageSize);
         }
     }
 }

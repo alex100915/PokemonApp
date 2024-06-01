@@ -10,9 +10,12 @@ namespace PokemonApp.Infrastructure.Repositories
             return PokemonsDatabase.Pokemons.FirstOrDefault(p => p.Number == id);
         }
 
-        public IEnumerable<Pokemon> GetPokemons()
+        public IEnumerable<Pokemon> GetPokemons(int page, int pageSize)
         {
-            return PokemonsDatabase.Pokemons.ToList();
+            return PokemonsDatabase.Pokemons
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
     }
 }

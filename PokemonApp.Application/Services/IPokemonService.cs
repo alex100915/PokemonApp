@@ -4,7 +4,7 @@ namespace PokemonApp.API.Services
 {
     public interface IPokemonService
     {
-        IEnumerable<Pokemon> GetPokemons();
+        IEnumerable<Pokemon> GetPokemons(int page, int pageSize);
 
         Pokemon GetPokemon(int id);
     }
