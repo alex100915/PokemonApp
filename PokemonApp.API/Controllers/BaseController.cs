@@ -8,9 +8,9 @@ namespace PokemonApp.API.Controllers
     {
         protected ObjectResult HandleException(Exception ex)
         {
-            if (ex is PokemonsDatabaseException)
+            if (ex?.InnerException is PokemonsDatabaseException)
             {
-                return Problem(statusCode: StatusCodes.Status500InternalServerError, detail: ex.Message);
+                return Problem(statusCode: StatusCodes.Status500InternalServerError, detail: ex.InnerException.Message);
             }
 
             return Problem(

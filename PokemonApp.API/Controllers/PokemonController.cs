@@ -1,6 +1,6 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PokemonApp.API.Services;
-using PokemonApp.Domain.Entities;
+using PokemonApp.Application.Pokemons;
 
 namespace PokemonApp.API.Controllers
 {
@@ -8,19 +8,19 @@ namespace PokemonApp.API.Controllers
     [Route("[controller]")]
     public class PokemonController : BaseController
     {
-        private readonly IPokemonService _pokemonService;
-        
-        public PokemonController(IPokemonService pokemonService)
+        private readonly IMediator _mediator;
+
+        public PokemonController(IMediator mediator)
         {
-            _pokemonService = pokemonService;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Pokemon>> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
+        public async Task<IActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
             try
             {
-                var pagedPokemons = _pokemonService.GetPokemons(page, pageSize);
+                var pagedPokemons = await _mediator.Send(new GetPokemonListQuery() { Page = page, PageSize = pageSize });
 
                 return Ok(pagedPokemons);
             }
@@ -31,11 +31,11 @@ namespace PokemonApp.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Pokemon> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var pokemon = _pokemonService.GetPokemon(id);
+                var pokemon = await _mediator.Send(new GetPokemonByIdQuery() { Id = id }); 
 
                 if (pokemon == null)
                     return NotFound();

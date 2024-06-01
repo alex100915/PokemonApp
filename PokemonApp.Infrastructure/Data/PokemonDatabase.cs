@@ -12,13 +12,13 @@ namespace PokemonApp.Infrastructure.Data
         {
             try
             {
-                using var reader = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\pokemon.json"));
+                using var reader = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\pokemdon.json"));
 
                 Pokemons = JsonConvert.DeserializeObject<List<Pokemon>>(reader.ReadToEnd());
             }
             catch (Exception ex) 
             {
-                throw new PokemonsDatabaseException($"Error occured loading data from Pokemons database. Excepion: {ex.Message}");
+                throw new PokemonsDatabaseException($"Error occured while loading data from Pokemons database. Exception: {ex.Message}");
             }
         }
     }

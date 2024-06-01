@@ -3,6 +3,7 @@
     public class Evolution
     {
         public string From { get; set; }
-        public List<string> To { get; set; }
+
+        public IEnumerable<string> To { get; set; }
     }
 }

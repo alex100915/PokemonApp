@@ -1,8 +1,11 @@
 using Microsoft.OpenApi.Models;
 using PokemonApp.API.Services;
+using PokemonApp.Application.Pokemons;
 using PokemonApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetPokemonByIdQuery).Assembly));
 
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IPokemonService, PokemonService>();
