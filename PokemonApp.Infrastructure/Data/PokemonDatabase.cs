@@ -12,7 +12,7 @@ namespace PokemonApp.Infrastructure.Data
         {
             try
             {
-                using var reader = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\pokemdon.json"));
+                using var reader = new StreamReader(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\pokemon.json"));
 
                 Pokemons = JsonConvert.DeserializeObject<List<Pokemon>>(reader.ReadToEnd());
             }
