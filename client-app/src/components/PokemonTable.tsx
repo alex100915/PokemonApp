@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Table,
   TableBody,
@@ -9,16 +9,23 @@ import {
   TableRow,
   Paper,
   Button,
-  Typography,
   Box,
 } from '@mui/material';
 
 interface PokemonTableProps {
   pokemonList: any[];
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
 }
 
-const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage }) => {
+const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, currentPage }) => {
+  const navigate = useNavigate();
+
+  const handlePokemonClick = (number: number) => {
+    const scrollPosition = window.scrollY;
+    navigate(`/pokemon/${number}`, { state: { fromPage: currentPage, scrollPosition } });
+  };
+
   return (
     <Box mt={2}>
       <TableContainer component={Paper}>
@@ -28,7 +35,6 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage }) => 
               <TableCell>Number</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Generation</TableCell>
-              <TableCell>Region</TableCell>
               <TableCell>Height</TableCell>
               <TableCell>Weight</TableCell>
               <TableCell>Type 1</TableCell>
@@ -41,10 +47,11 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage }) => 
               <TableRow key={pokemon.number}>
                 <TableCell>{pokemon.number}</TableCell>
                 <TableCell>
-                  <Link to={`/pokemon/${pokemon.number}`}>{pokemon.name}</Link>
+                  <Link to="#" onClick={(e) => { e.preventDefault(); handlePokemonClick(pokemon.number); }}>
+                    {pokemon.name}
+                  </Link>
                 </TableCell>
                 <TableCell>{pokemon.generation}</TableCell>
-                <TableCell>{pokemon.region}</TableCell>
                 <TableCell>{pokemon.height}</TableCell>
                 <TableCell>{pokemon.weight}</TableCell>
                 <TableCell>{pokemon.types[0]}</TableCell>
@@ -55,7 +62,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage }) => 
           </TableBody>
         </Table>
       </TableContainer>
-      <Box mt={2} display="flex" justifyContent="space-between">
+      <Box mt={2} display="flex" justifyContent="space-between" mb={4}>
         <Button variant="contained" color="primary" onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}>
           Previous
         </Button>

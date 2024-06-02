@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getPokemonDetails } from '../services/PokemonService';
 import { Container, Typography, Box, CircularProgress, Paper, Grid, Button } from '@mui/material';
 
 const DetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.fromPage || 1;
+
   const [pokemon, setPokemon] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,10 +23,20 @@ const DetailsPage: React.FC = () => {
 
   if (loading) return <CircularProgress />;
 
+  const handleBackClick = () => {
+    const scrollPosition = location.state?.scrollPosition || 0;
+    navigate("/", { state: { fromPage, scrollPosition } });
+  };
+
   return (
     <Container>
       <Box mt={4}>
-        <Button variant="contained" color="primary" onClick={() => navigate(-1)} style={{ marginBottom: '16px' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleBackClick}
+          style={{ marginBottom: '16px' }}
+        >
           Back
         </Button>
         <Typography variant="h4" gutterBottom>
@@ -33,7 +46,7 @@ const DetailsPage: React.FC = () => {
           <Box p={4}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
-                <img src={pokemon.image} alt={pokemon.name} style={{ maxWidth: '100%' }} />
+                <img src={pokemon.image} alt={pokemon.name} style={{ height:'300px', maxWidth: '100%' }} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" gutterBottom><strong>Number:</strong> {pokemon.number}</Typography>
