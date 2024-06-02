@@ -44,7 +44,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, curre
           </TableHead>
           <TableBody>
             {pokemonList.map((pokemon) => (
-              <TableRow key={pokemon.number}>
+              <TableRow key={pokemon.number} style={{ cursor: 'pointer' }} onClick={() => handlePokemonClick(pokemon.number)}>
                 <TableCell>{pokemon.number}</TableCell>
                 <TableCell>
                   <Link to="#" onClick={(e) => { e.preventDefault(); handlePokemonClick(pokemon.number); }}>
@@ -62,7 +62,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, curre
           </TableBody>
         </Table>
       </TableContainer>
-      <Box mt={2} display="flex" justifyContent="space-between" mb={4}>
+      <Box mt={3} mb={2} display="flex" justifyContent="space-between">
         <Button variant="contained" color="primary" onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}>
           Previous
         </Button>

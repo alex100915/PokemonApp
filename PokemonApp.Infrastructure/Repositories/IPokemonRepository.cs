@@ -5,7 +5,11 @@ namespace PokemonApp.Infrastructure.Repositories
     public interface IPokemonRepository
     {
         IEnumerable<Pokemon> GetPokemons(int page, int pageSize);
+        
+        IEnumerable<Pokemon> GetPokemons();
 
-        Pokemon GetPokemon(int id);
+        Pokemon GetPokemonById(int id);
+
+        Pokemon GetPokemonByName(string name);
     }
 }

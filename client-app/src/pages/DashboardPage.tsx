@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getPokemonSummary, getPokemonList } from '../services/PokemonService';
+import { getPokemonList } from '../services/PokemonService';
 import PokemonTable from '../components/PokemonTable';
-import { Container, Typography, Box, CircularProgress, Backdrop } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Backdrop, CssBaseline, Paper } from '@mui/material';
+import { useSummary } from '../contexts/SummaryContext';
+import SummarySection from '../components/SummarySection';
 
 const DashboardPage: React.FC = () => {
   const location = useLocation();
-  const [summary, setSummary] = useState<any>(null);
+  const { summary, loading: summaryLoading } = useSummary();
   const [pokemonList, setPokemonList] = useState<any[]>([]);
   const [page, setPage] = useState(location.state?.fromPage || 1);
   const [loading, setLoading] = useState(true);
@@ -14,8 +16,7 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const summaryData = await getPokemonSummary();
-      setSummary(summaryData);
+      setLoading(true);
       const listData = await getPokemonList(page, 25);
       setPokemonList(listData);
       setLoading(false);
@@ -31,21 +32,26 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Container>
-      <Backdrop open={loading} style={{ zIndex: 1000 }}>
+      <CssBaseline />
+      <Backdrop open={loading || summaryLoading} style={{ zIndex: 1000 }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Box mt={4}>
-        <Typography variant="h4" gutterBottom>
-          Pokemon Dashboard
+      <Box mt={4} mb={4}>
+        <Typography variant="h4" gutterBottom align="center">
+          Pokémon Dashboard
         </Typography>
         {summary && (
-          <Box mb={4}>
-            <Typography variant="h6">Total Pokemon Species: {summary.total}</Typography>
-            <Typography variant="body1">Types Count: {JSON.stringify(summary.types)}</Typography>
-            <Typography variant="body1">Generations Count: {JSON.stringify(summary.generations)}</Typography>
+          <Box mb={2}>
+            <SummarySection
+              totalSpecies={summary.totalSpecies}
+              typeCounts={summary.typeCounts}
+              generationCounts={summary.generationCounts}
+            />
           </Box>
         )}
-        <PokemonTable pokemonList={pokemonList} setPage={setPage} currentPage={page} />
+        <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
+          <PokemonTable pokemonList={pokemonList} setPage={setPage} currentPage={page} />
+        </Paper>
       </Box>
     </Container>
   );

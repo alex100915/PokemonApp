@@ -1,4 +1,5 @@
-﻿using PokemonApp.Domain.Entities;
+﻿using PokemonApp.Application.Pokemons;
+using PokemonApp.Domain.Entities;
 
 namespace PokemonApp.API.Services
 {
@@ -6,6 +7,10 @@ namespace PokemonApp.API.Services
     {
         IEnumerable<Pokemon> GetPokemons(int page, int pageSize);
 
-        Pokemon GetPokemon(int id);
+        Pokemon GetPokemonById(int id);
+
+        Pokemon GetPokemonByName(string name);
+
+        SummaryData GetPokemonSummary();
     }
 }

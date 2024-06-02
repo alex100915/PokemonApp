@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getPokemonDetails } from '../services/PokemonService';
-import { Container, Typography, Box, CircularProgress, Paper, Grid, Button } from '@mui/material';
+import { getPokemonDetails, getPokemonByName } from '../services/PokemonService';
+import { Container, Typography, Box, CircularProgress, Paper, Grid, Button, Link as MuiLink } from '@mui/material';
 
 const DetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,14 +12,22 @@ const DetailsPage: React.FC = () => {
   const [pokemon, setPokemon] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchPokemon = async (pokemonId: number) => {
+    setLoading(true);
+    const data = await getPokemonDetails(pokemonId);
+    setPokemon(data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getPokemonDetails(Number(id));
-      setPokemon(data);
-      setLoading(false);
-    };
-    fetchData();
+    fetchPokemon(Number(id));
   }, [id]);
+
+  const handleEvolutionClick = async (name: string) => {
+    setLoading(true);
+    const data = await getPokemonByName(name);
+    navigate(`/pokemon/${data.number}`, { state: { fromPage, scrollPosition: window.scrollY } });
+  };
 
   if (loading) return <CircularProgress />;
 
@@ -46,7 +54,7 @@ const DetailsPage: React.FC = () => {
           <Box p={4}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
-                <img src={pokemon.image} alt={pokemon.name} style={{ height:'300px', maxWidth: '100%' }} />
+                <img src={pokemon.image} alt={pokemon.name} style={{ maxWidth: '100%', height: '300px' }} />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1" gutterBottom><strong>Number:</strong> {pokemon.number}</Typography>
@@ -56,8 +64,32 @@ const DetailsPage: React.FC = () => {
                 <Typography variant="body1" gutterBottom><strong>Types:</strong> {pokemon.types.join(', ')}</Typography>
                 <Typography variant="body1" gutterBottom><strong>Abilities:</strong> {pokemon.abilities.join(', ')}</Typography>
                 <Typography variant="body1" gutterBottom><strong>Moves:</strong> {pokemon.moves.join(', ')}</Typography>
-                <Typography variant="body1" gutterBottom><strong>Evolution From:</strong> {pokemon.evolution.from}</Typography>
-                <Typography variant="body1" gutterBottom><strong>Evolution To:</strong> {pokemon.evolution.to.join(', ')}</Typography>
+                <Typography variant="body1" gutterBottom>
+                  <strong>Evolution From: </strong> 
+                  {pokemon.evolution.from ? ( pokemon.evolution.from.toLowerCase() === pokemon.name.toLowerCase() ? pokemon.evolution.from :   
+                    <MuiLink href="#" onClick={(e) => { e.preventDefault(); handleEvolutionClick(pokemon.evolution.from); }}>
+                      {pokemon.evolution.from}
+                    </MuiLink>
+                  ) : (
+                    "None"
+                  )}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                <strong>Evolution To: </strong>
+                  {pokemon.evolution.to.length > 0 ? (
+                    pokemon.evolution.to.map((evol: string, index: number) => (
+                      evol.toLowerCase() === pokemon.name.toLowerCase() ? (
+                        evol
+                      ) : (
+                        <MuiLink key={index} href="#" onClick={(e) => { e.preventDefault(); handleEvolutionClick(evol); }} style={{ marginLeft: index > 0 ? '8px' : '0' }}>
+                          {evol}
+                        </MuiLink>
+                      )
+                    ))
+                  ) : (
+                    "None"
+                  )}
+                </Typography>
               </Grid>
             </Grid>
           </Box>

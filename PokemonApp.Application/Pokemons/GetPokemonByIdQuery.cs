@@ -20,7 +20,7 @@ namespace PokemonApp.Application.Pokemons
 
         public Task<Pokemon> Handle(GetPokemonByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = _pokemonService.GetPokemon(request.Id);
+            var result = _pokemonService.GetPokemonById(request.Id);
 
             return Task.FromResult(result);
         }

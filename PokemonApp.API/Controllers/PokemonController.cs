@@ -16,7 +16,7 @@ namespace PokemonApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
+        public async Task<IActionResult> GetPokemons([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace PokemonApp.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetPokemonById(int id)
         {
             try
             {
@@ -46,6 +46,25 @@ namespace PokemonApp.API.Controllers
             {
                 return HandleException(ex);
             }
+        }
+
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetPokemonByName(string name)
+        {
+            var pokemon = await _mediator.Send(new GetPokemonByNameQuery() { Name = name });
+            
+            if (pokemon == null) 
+                return NotFound();
+            
+            return Ok(pokemon);
+        }
+
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetPokemonSummary()
+        {
+            var summary = await _mediator.Send(new GetPokemonSummaryQuery());
+
+            return Ok(summary);
         }
     }
 }
