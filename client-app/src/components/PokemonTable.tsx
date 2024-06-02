@@ -11,9 +11,10 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import { Pokemon } from '../types/pokemon';
 
 interface PokemonTableProps {
-  pokemonList: any[];
+  pokemonList: Pokemon[];
   setPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
 }

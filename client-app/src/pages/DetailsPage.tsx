@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getPokemonDetails, getPokemonByName } from '../services/PokemonService';
 import { Container, Typography, Box, CircularProgress, Paper, Grid, Button, Link as MuiLink } from '@mui/material';
+import { Pokemon } from '../types/pokemon';
 
 const DetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -9,7 +10,7 @@ const DetailsPage: React.FC = () => {
   const location = useLocation();
   const fromPage = location.state?.fromPage || 1;
 
-  const [pokemon, setPokemon] = useState<any>(null);
+  const [pokemon, setPokemon] = useState<Pokemon>();
   const [loading, setLoading] = useState(true);
 
   const fetchPokemon = async (pokemonId: number) => {
@@ -30,6 +31,10 @@ const DetailsPage: React.FC = () => {
   };
 
   if (loading) return <CircularProgress />;
+
+  if (!pokemon) {
+    return <Typography variant="h6" align="center">Pokemon not found</Typography>;
+  }
 
   const handleBackClick = () => {
     const scrollPosition = location.state?.scrollPosition || 0;
@@ -67,7 +72,7 @@ const DetailsPage: React.FC = () => {
                 <Typography variant="body1" gutterBottom>
                   <strong>Evolution From: </strong> 
                   {pokemon.evolution.from ? ( pokemon.evolution.from.toLowerCase() === pokemon.name.toLowerCase() ? pokemon.evolution.from :   
-                    <MuiLink href="#" onClick={(e) => { e.preventDefault(); handleEvolutionClick(pokemon.evolution.from); }}>
+                    <MuiLink href="#" onClick={(e) => { e.preventDefault(); handleEvolutionClick(pokemon.evolution.from!); }}>
                       {pokemon.evolution.from}
                     </MuiLink>
                   ) : (

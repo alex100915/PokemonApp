@@ -1,16 +1,28 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getPokemonSummary } from '../services/PokemonService';
+import { SummaryData } from "../types/summary";
 
-const SummaryContext = createContext<any>(null);
+interface SummaryContextProps {
+  summary: SummaryData | null;
+  loading: boolean;
+}
 
-export const useSummary = () => useContext(SummaryContext);
+const SummaryContext = createContext<SummaryContextProps | null>(null);
+
+export const useSummary = () => {
+  const context = useContext(SummaryContext);
+  if (!context) {
+    throw new Error('useSummary must be used within a SummaryProvider');
+  }
+  return context;
+};
 
 interface SummaryProviderProps {
   children: ReactNode;
 }
 
 export const SummaryProvider: React.FC<SummaryProviderProps> = ({ children }) => {
-  const [summary, setSummary] = useState<any>(null);
+  const [summary, setSummary] = useState<SummaryData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +30,6 @@ export const SummaryProvider: React.FC<SummaryProviderProps> = ({ children }) =>
       try {
         const data = await getPokemonSummary();
         setSummary(data);
-        console.log(data)
       } catch (error) {
         console.error('Failed to fetch summary:', error);
       } finally {

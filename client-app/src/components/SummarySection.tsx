@@ -1,14 +1,9 @@
 import React from 'react';
 import { Typography, Box, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText, Paper, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { SummaryData } from "../types/summary";
 
-interface SummarySectionProps {
-  totalSpecies: number;
-  typeCounts: { [key: string]: number };
-  generationCounts: { [key: string]: number };
-}
-
-const SummarySection: React.FC<SummarySectionProps> = ({ totalSpecies, typeCounts, generationCounts }) => {
+const SummarySection: React.FC<{ summary: SummaryData }> = ({ summary }) => {
   return (
     <Box mb={4}>
       <Paper elevation={3} style={{ padding: '16px' }}>
@@ -27,7 +22,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ totalSpecies, typeCount
               </AccordionSummary>
               <AccordionDetails>
                 <Typography variant="body1">
-                  There are <strong>{totalSpecies}</strong> Pokémon species in total.
+                  There are <strong>{summary.totalSpecies}</strong> Pokémon species in total.
                 </Typography>
               </AccordionDetails>
             </Accordion>
@@ -43,7 +38,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ totalSpecies, typeCount
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  {Object.entries(typeCounts).map(([type, count]) => (
+                  {Object.entries(summary.typeCounts).map(([type, count]) => (
                     <ListItem key={type}>
                       <ListItemText primary={`${type}: ${count}`} />
                     </ListItem>
@@ -63,7 +58,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ totalSpecies, typeCount
               </AccordionSummary>
               <AccordionDetails>
                 <List>
-                  {Object.entries(generationCounts).map(([generation, count]) => (
+                  {Object.entries(summary.generationCounts).map(([generation, count]) => (
                     <ListItem key={generation}>
                       <ListItemText primary={`${generation}: ${count}`} />
                     </ListItem>

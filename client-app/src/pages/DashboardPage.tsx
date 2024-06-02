@@ -5,11 +5,12 @@ import PokemonTable from '../components/PokemonTable';
 import { Container, Typography, Box, CircularProgress, Backdrop, CssBaseline, Paper } from '@mui/material';
 import { useSummary } from '../contexts/SummaryContext';
 import SummarySection from '../components/SummarySection';
+import { Pokemon } from '../types/pokemon';
 
 const DashboardPage: React.FC = () => {
   const location = useLocation();
   const { summary, loading: summaryLoading } = useSummary();
-  const [pokemonList, setPokemonList] = useState<any[]>([]);
+  const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(location.state?.fromPage || 1);
   const [loading, setLoading] = useState(true);
   const scrollPosition = location.state?.scrollPosition || 0;
@@ -42,11 +43,7 @@ const DashboardPage: React.FC = () => {
         </Typography>
         {summary && (
           <Box mb={2}>
-            <SummarySection
-              totalSpecies={summary.totalSpecies}
-              typeCounts={summary.typeCounts}
-              generationCounts={summary.generationCounts}
-            />
+            <SummarySection summary={summary}/>
           </Box>
         )}
         <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
