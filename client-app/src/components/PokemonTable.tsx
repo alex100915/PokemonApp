@@ -16,7 +16,7 @@ interface PokemonTableProps {
   pokemonList: Pokemon[];
   setPage: (page: number) => void;
   currentPage: number;
-  totalPages: number; // Add this prop to handle total pages for pagination
+  totalPages: number; 
 }
 
 const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, currentPage, totalPages }) => {

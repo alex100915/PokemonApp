@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getPokemonDetails, getPokemonByName } from '../services/PokemonService';
-import { Container, Typography, Box, CircularProgress, Paper, Grid, Button, Link as MuiLink } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Paper, Grid, Button, Link as MuiLink, Backdrop } from '@mui/material';
 import { Pokemon } from '../types/pokemon';
 
 const DetailsPage: React.FC = () => {
@@ -30,18 +30,23 @@ const DetailsPage: React.FC = () => {
     navigate(`/pokemon/${data.number}`, { state: { fromPage, scrollPosition: window.scrollY } });
   };
 
-  if (loading) return <CircularProgress />;
-
-  if (!pokemon) {
-    return <Typography variant="h6" align="center">Pokemon not found</Typography>;
-  }
-
   const handleBackClick = () => {
     const scrollPosition = location.state?.scrollPosition || 0;
     navigate("/", { state: { fromPage, scrollPosition } });
   };
 
-  return (
+  if (loading) 
+    return (
+      <Backdrop open={loading} style={{ zIndex: 1000 }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+
+  if (!pokemon) {
+    return <Typography variant="h6" align="center">Pokemon not found</Typography>;
+  }
+
+  return ( 
     <Container>
       <Box mt={4}>
         <Button
