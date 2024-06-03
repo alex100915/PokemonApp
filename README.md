@@ -18,10 +18,6 @@ This project is a full-stack application consisting of a .NET Web API backend an
 - [Getting Started](#getting-started)
 - [Backend Setup](#backend-setup)
 - [Frontend Setup](#frontend-setup)
-- [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Prerequisites
 
