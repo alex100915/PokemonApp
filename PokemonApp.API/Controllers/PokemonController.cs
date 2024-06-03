@@ -6,7 +6,7 @@ namespace PokemonApp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PokemonController : BaseController
+    public class PokemonController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -18,34 +18,20 @@ namespace PokemonApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPokemons([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
         {
-            try
-            {
-                var pagedPokemons = await _mediator.Send(new GetPokemonListQuery() { Page = page, PageSize = pageSize });
+            var pagedPokemons = await _mediator.Send(new GetPokemonListQuery() { Page = page, PageSize = pageSize });
 
-                return Ok(pagedPokemons);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
+            return Ok(pagedPokemons);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPokemonById(int id)
         {
-            try
-            {
-                var pokemon = await _mediator.Send(new GetPokemonByIdQuery() { Id = id }); 
+            var pokemon = await _mediator.Send(new GetPokemonByIdQuery() { Id = id }); 
 
-                if (pokemon == null)
-                    return NotFound();
+            if (pokemon == null)
+                return NotFound();
 
-                return Ok(pokemon);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
+            return Ok(pokemon);
         }
 
         [HttpGet("name/{name}")]

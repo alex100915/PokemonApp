@@ -1,30 +1,34 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  Table,
+import { Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
   Paper,
-  Button,
   Box,
+  Pagination,
 } from '@mui/material';
 import { Pokemon } from '../types/pokemon';
 
 interface PokemonTableProps {
   pokemonList: Pokemon[];
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (page: number) => void;
   currentPage: number;
+  totalPages: number; // Add this prop to handle total pages for pagination
 }
 
-const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, currentPage }) => {
+const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, currentPage, totalPages }) => {
   const navigate = useNavigate();
 
   const handlePokemonClick = (number: number) => {
     const scrollPosition = window.scrollY;
     navigate(`/pokemon/${number}`, { state: { fromPage: currentPage, scrollPosition } });
+  };
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
   return (
@@ -63,13 +67,13 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, curre
           </TableBody>
         </Table>
       </TableContainer>
-      <Box mt={3} mb={2} display="flex" justifyContent="space-between">
-        <Button variant="contained" color="primary" onClick={() => setPage((prevPage) => Math.max(prevPage - 1, 1))}>
-          Previous
-        </Button>
-        <Button variant="contained" color="primary" onClick={() => setPage((prevPage) => prevPage + 1)}>
-          Next
-        </Button>
+      <Box mt={3} mb={2} display="flex" justifyContent="center">
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
       </Box>
     </Box>
   );

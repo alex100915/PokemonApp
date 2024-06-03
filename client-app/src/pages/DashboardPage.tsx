@@ -18,6 +18,7 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      console.log(pokemonList)
       const listData = await getPokemonList(page, 25);
       setPokemonList(listData);
       setLoading(false);
@@ -30,6 +31,8 @@ const DashboardPage: React.FC = () => {
       window.scrollTo(0, scrollPosition);
     }
   }, [loading, scrollPosition]);
+
+  if (loading || summaryLoading) return <CircularProgress />;
 
   return (
     <Container>
@@ -47,7 +50,12 @@ const DashboardPage: React.FC = () => {
           </Box>
         )}
         <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
-          <PokemonTable pokemonList={pokemonList} setPage={setPage} currentPage={page} />
+          <PokemonTable
+            pokemonList={pokemonList}
+            setPage={setPage}
+            currentPage={page}
+            totalPages={Math.ceil(summary?.totalSpecies! / 25)}
+          />
         </Paper>
       </Box>
     </Container>
