@@ -59,7 +59,7 @@ Follow these steps to get the project up and running on your local machine.
     dotnet run
     ```
 
-    The API will be available at `https://localhost:7321`.
+    The API will be available at `https://localhost:7123`.
 
 ### Frontend Setup
 
