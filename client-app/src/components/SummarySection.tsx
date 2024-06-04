@@ -1,9 +1,9 @@
 import React from 'react';
 import { Typography, Box, Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText, Paper, Grid } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { SummaryData } from "../types/summary";
+import { PokemonSummaryData } from "../types/summary";
 
-const SummarySection: React.FC<{ summary: SummaryData }> = ({ summary }) => {
+const SummarySection: React.FC<{ summary: PokemonSummaryData }> = ({ summary }) => {
   return (
     <Box mb={4}>
       <Paper elevation={3} style={{ padding: '16px' }}>

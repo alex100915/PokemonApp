@@ -61,7 +61,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonList, setPage, curre
                 <TableCell>{pokemon.weight}</TableCell>
                 <TableCell>{pokemon.types[0]}</TableCell>
                 <TableCell>{pokemon.types[1]}</TableCell>
-                <TableCell>{pokemon.moves.length}</TableCell>
+                <TableCell>{pokemon.movesCount}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -16,16 +16,19 @@ const DashboardPage: React.FC = () => {
   const scrollPosition = location.state?.scrollPosition || 0;
   const pageSize = 25;
 
+  const paginatedPokemonList = pokemonList.slice((page - 1) * pageSize, page * pageSize);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      console.log(pokemonList)
-      const listData = await getPokemonList(page, pageSize);
+      const listData = await getPokemonList();
       setPokemonList(listData);
       setLoading(false);
     };
-    fetchData();
-  }, [page]);
+    if (pokemonList.length === 0) {
+      fetchData();
+    }
+  });
 
   useEffect(() => {
     if (!loading) {
@@ -50,7 +53,7 @@ const DashboardPage: React.FC = () => {
         )}
         <Paper elevation={3} style={{ padding: '16px', marginBottom: '16px' }}>
           <PokemonTable
-            pokemonList={pokemonList}
+            pokemonList={paginatedPokemonList}
             setPage={setPage}
             currentPage={page}
             totalPages={Math.ceil(summary?.totalSpecies! / pageSize)}

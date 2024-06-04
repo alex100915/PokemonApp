@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using PokemonApp.API.Services;
-using PokemonApp.Domain.Entities;
 
 namespace PokemonApp.Application.Pokemons
 {
-    public class GetPokemonSummaryQuery : IRequest<SummaryData>
+    public class GetPokemonSummaryQuery : IRequest<PokemonSummaryData>
     {
     }
 
-    public class GetPokemonSummaryHandler : IRequestHandler<GetPokemonSummaryQuery, SummaryData>
+    public class GetPokemonSummaryHandler : IRequestHandler<GetPokemonSummaryQuery, PokemonSummaryData>
     {
         private readonly IPokemonService _pokemonService;
 
@@ -17,7 +16,7 @@ namespace PokemonApp.Application.Pokemons
             _pokemonService = pokemonService;
         }
 
-        public Task<SummaryData> Handle(GetPokemonSummaryQuery request, CancellationToken cancellationToken)
+        public Task<PokemonSummaryData> Handle(GetPokemonSummaryQuery request, CancellationToken cancellationToken)
         {
             var result = _pokemonService.GetPokemonSummary();
 

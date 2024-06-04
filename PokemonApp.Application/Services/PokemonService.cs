@@ -23,15 +23,15 @@ namespace PokemonApp.API.Services
             return _pokemonRepository.GetPokemonByName(name);
         }
 
-        public IEnumerable<Pokemon> GetPokemons(int page, int pageSize)
+        public IEnumerable<PokemonDto> GetPokemonsForDashboard()
         {
-            return _pokemonRepository.GetPokemons(page, pageSize);
+            return _pokemonRepository.GetPokemonsForDashboard();
         }
 
-        public SummaryData GetPokemonSummary()
+        public PokemonSummaryData GetPokemonSummary()
         {
-            var pokemons = _pokemonRepository.GetPokemons();
-            
+            var pokemons = _pokemonRepository.GetPokemonsForDashboard();
+
             var totalSpecies = pokemons.Count();
 
             var typesCounts = pokemons
@@ -45,7 +45,7 @@ namespace PokemonApp.API.Services
                 .Select(g => new { Generation = g.Key, Count = g.Count() })
                 .ToDictionary(g => g.Generation, g => g.Count);
 
-            return new SummaryData
+            return new PokemonSummaryData
             {
                 TotalSpecies = totalSpecies,
                 TypeCounts = typesCounts,

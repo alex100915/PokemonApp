@@ -16,9 +16,9 @@ namespace PokemonApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPokemons([FromQuery] int page = 1, [FromQuery] int pageSize = 25)
+        public async Task<IActionResult> GetPokemons()
         {
-            var pagedPokemons = await _mediator.Send(new GetPokemonListQuery() { Page = page, PageSize = pageSize });
+            var pagedPokemons = await _mediator.Send(new GetPokemonListQuery());
 
             return Ok(pagedPokemons);
         }

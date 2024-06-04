@@ -4,9 +4,7 @@ namespace PokemonApp.Infrastructure.Repositories
 {
     public interface IPokemonRepository
     {
-        IEnumerable<Pokemon> GetPokemons(int page, int pageSize);
-        
-        IEnumerable<Pokemon> GetPokemons();
+        IEnumerable<PokemonDto> GetPokemonsForDashboard();
 
         Pokemon GetPokemonById(int id);
 

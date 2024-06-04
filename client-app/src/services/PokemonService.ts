@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Pokemon } from '../types/pokemon';
 
 const API_URL = 'https://localhost:7123/pokemon/';
 
@@ -7,17 +8,17 @@ export const getPokemonSummary = async () => {
   return response.data;
 };
 
-export const getPokemonList = async (page: number, size: number) => {
-  const response = await axios.get(`${API_URL}?page=${page}&size=${size}`);
+export const getPokemonList = async () => {
+  const response = await axios.get<Pokemon[]>(`${API_URL}`);
   return response.data;
 };
 
 export const getPokemonDetails = async (id: number) => {
-  const response = await axios.get(`${API_URL}${id}`);
+  const response = await axios.get<Pokemon>(`${API_URL}${id}`);
   return response.data;
 };
 
 export const getPokemonByName = async (name: string) => {
-  const response = await axios.get(`${API_URL}name/${name}`);
+  const response = await axios.get<Pokemon>(`${API_URL}name/${name}`);
   return response.data;
 };

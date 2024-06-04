@@ -6,6 +6,7 @@ export interface Pokemon {
   weight: number;
   types: string[];
   stats: { name: string; value: number }[];
+  movesCount: number;
   moves: string[];
   abilities: string[];
   evolution: { from: string | null; to: string[] };

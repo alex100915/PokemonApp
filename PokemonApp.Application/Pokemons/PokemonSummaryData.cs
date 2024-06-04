@@ -1,6 +1,6 @@
 ﻿namespace PokemonApp.Application.Pokemons
 {
-    public class SummaryData
+    public class PokemonSummaryData
     {
         public int TotalSpecies { get; set; }
 

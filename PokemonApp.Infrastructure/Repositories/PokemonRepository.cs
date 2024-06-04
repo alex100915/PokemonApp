@@ -15,17 +15,19 @@ namespace PokemonApp.Infrastructure.Repositories
             return PokemonsDatabase.Pokemons.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
         }
 
-        public IEnumerable<Pokemon> GetPokemons(int page, int pageSize)
+        public IEnumerable<PokemonDto> GetPokemonsForDashboard()
         {
             return PokemonsDatabase.Pokemons
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-        }
-
-        public IEnumerable<Pokemon> GetPokemons()
-        {
-            return PokemonsDatabase.Pokemons
+                .Select(p => new PokemonDto
+                {
+                    Name = p.Name,
+                    Generation = p.Generation,
+                    Height = p.Height,
+                    MovesCount = p.Moves.Count(),
+                    Number = p.Number,
+                    Types = p.Types,
+                    Weight = p.Weight
+                })
                 .ToList();
         }
     }

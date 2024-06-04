@@ -4,14 +4,11 @@ using PokemonApp.Domain.Entities;
 
 namespace PokemonApp.Application.Pokemons
 {
-    public class GetPokemonListQuery : IRequest<IEnumerable<Pokemon>>
+    public class GetPokemonListQuery : IRequest<IEnumerable<PokemonDto>>
     {
-        public int Page { get; set; }
-
-        public int PageSize { get; set; }
     }
 
-    public class GetPokemonListHandler : IRequestHandler<GetPokemonListQuery, IEnumerable<Pokemon>>
+    public class GetPokemonListHandler : IRequestHandler<GetPokemonListQuery, IEnumerable<PokemonDto>>
     {
         private readonly IPokemonService _pokemonService;
 
@@ -20,9 +17,9 @@ namespace PokemonApp.Application.Pokemons
             _pokemonService = pokemonService;
         }
 
-        public Task<IEnumerable<Pokemon>> Handle(GetPokemonListQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<PokemonDto>> Handle(GetPokemonListQuery request, CancellationToken cancellationToken)
         {
-            var result = _pokemonService.GetPokemons(request.Page, request.PageSize);
+            var result = _pokemonService.GetPokemonsForDashboard();
 
             return Task.FromResult(result);
         }

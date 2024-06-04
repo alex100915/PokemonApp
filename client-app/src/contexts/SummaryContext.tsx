@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { getPokemonSummary } from '../services/PokemonService';
-import { SummaryData } from "../types/summary";
+import { PokemonSummaryData } from "../types/summary";
 
 interface SummaryContextProps {
-  summary: SummaryData | null;
+  summary: PokemonSummaryData | null;
   loading: boolean;
 }
 
@@ -22,7 +22,7 @@ interface SummaryProviderProps {
 }
 
 export const SummaryProvider: React.FC<SummaryProviderProps> = ({ children }) => {
-  const [summary, setSummary] = useState<SummaryData | null>(null);
+  const [summary, setSummary] = useState<PokemonSummaryData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
