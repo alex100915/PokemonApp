@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { Pokemon } from '../types/pokemon';
+import { PokemonSummaryData } from '../types/summary';
 
 const API_URL = 'https://localhost:7123/pokemon/';
 
 export const getPokemonSummary = async () => {
-  const response = await axios.get(`${API_URL}summary`);
+  const response = await axios.get<PokemonSummaryData>(`${API_URL}summary`);
   return response.data;
 };
 

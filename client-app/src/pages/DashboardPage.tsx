@@ -15,7 +15,6 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const scrollPosition = location.state?.scrollPosition || 0;
   const pageSize = 25;
-
   const paginatedPokemonList = pokemonList.slice((page - 1) * pageSize, page * pageSize);
 
   useEffect(() => {
@@ -46,6 +45,9 @@ const DashboardPage: React.FC = () => {
         <Typography variant="h4" gutterBottom align="center">
           Pokémon Dashboard
         </Typography>
+          <Box mt={2} mb={2} display="flex" justifyContent="center">
+            <img src='/pokeball.png' alt="Pokemon" style={{ maxWidth: '50px' }} />
+          </Box>
         {summary && (
           <Box mb={2}>
             <SummarySection summary={summary}/>
